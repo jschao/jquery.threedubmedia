@@ -1,11 +1,11 @@
 /*! 
- * jquery.event.drag - v 2.0.0 
+ * jquery.event.drag - v 2.0.1 
  * Copyright (c) 2010 Three Dub Media - http://threedubmedia.com
  * Open Source MIT License - http://threedubmedia.com/code/license
  */
 // Created: 2008-06-04 
-// Updated: 2010-06-07
-// REQUIRES: jquery 1.4.2+
+// Updated: 2012-03-16
+// REQUIRES: jquery 1.7.1
 
 ;(function( $ ){
 
@@ -219,17 +219,18 @@ drag = $special.drag = {
 		// element event structure
 		events = $.data( this, "events" ) || {};
 		// query live events
-		$.each( events.live || [], function( i, obj ){
+		$.each( events , function( i, obj ){
 			// no event type matches
-			if ( obj.preType.indexOf("drag") !== 0 )
+			if (i.indexOf("drag") !== 0 )
 				return;
 			// locate the element to delegate
+			obj = obj[0];
 			target = $( event.target ).closest( obj.selector, event.currentTarget )[0];
 			// no element found
 			if ( !target ) 
 				return;
 			// add an event handler
-			$event.add( target, obj.origType+'.'+drag.livekey, obj.origHandler, obj.data );
+			$event.add( target, obj.type+'.'+drag.livekey, obj.handler, obj.data );
 			// remember new elements
 			if ( $.inArray( target, elems ) < 0 )
 				elems.push( target );		
